@@ -545,11 +545,25 @@ Widget build(BuildContext context) {
               const SizedBox(height: 16),
               if (_hasDamage == 'Sim') ...[
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Descrição do Dano'),
+                  decoration: const InputDecoration(
+                    labelText: 'Descrição do Dano',
+                    alignLabelWithHint: true, // Alinha o rótulo com o topo do campo
+                    border: OutlineInputBorder(), // Adiciona uma borda ao redor do campo
+                  ),
+                  keyboardType: TextInputType.multiline, // Permite múltiplas linhas
+                  textInputAction: TextInputAction.newline, // Habilita "Enter" para criar uma nova linha
+                  maxLines: null, // Permite linhas ilimitadas
+                  minLines: 3, // Mostra pelo menos 3 linhas por padrão
                   onChanged: (value) {
                     _damageDescription = value;
                   },
                   initialValue: _damageDescription,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira a descrição do dano';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
